@@ -5,7 +5,7 @@
     "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": ["javascript", "javascriptreact", "json"],
+  "eslint.validate": ["javascript", "javascriptreact"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
