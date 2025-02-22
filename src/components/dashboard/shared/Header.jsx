@@ -1,6 +1,7 @@
-import { Typography, Box, useTheme } from "@mui/material";
-import colors from "../theme";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import colors from "../../../theme";
 
 const Header = ({ title, subtitle, url, urltitle }) => {
   return (
@@ -16,7 +17,7 @@ const Header = ({ title, subtitle, url, urltitle }) => {
       <Typography variant="h5" color={colors.greenAccent[400]}>
         {url ? (
           <>
-            <Link  title={urltitle} to={url}>
+            <Link title={urltitle} to={url}>
               {urltitle}
             </Link>
             <span>-</span>

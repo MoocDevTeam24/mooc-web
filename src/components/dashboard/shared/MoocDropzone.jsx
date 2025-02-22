@@ -1,5 +1,5 @@
-import { Avatar } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import { Avatar } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 
 export default function MoocDropzone(props) {
@@ -10,8 +10,8 @@ export default function MoocDropzone(props) {
     const reader = new FileReader();
     reader.onload = (event) => {
       setAvatarSrc(event.target.result);
-      
-      console.log('event.target.result',event.target.result);
+
+      console.log("event.target.result", event.target.result);
       if (props.avatarResult) {
         props.avatarResult(event.target.result);
       }
@@ -23,7 +23,7 @@ export default function MoocDropzone(props) {
 
   return (
     <div>
-      <Avatar src={avatarSrc} sx={{ width: 100, height: 100 }}></Avatar>
+      <Avatar src={avatarSrc} sx={{ width: 100, height: 100 }} />
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         {isDragActive ? (
