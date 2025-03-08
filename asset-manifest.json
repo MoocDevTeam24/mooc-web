@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.49cddc3d.css",
-    "main.js": "/static/js/main.f0a5dfb5.js",
-    "index.html": "/index.html",
-    "main.49cddc3d.css.map": "/static/css/main.49cddc3d.css.map",
-    "main.f0a5dfb5.js.map": "/static/js/main.f0a5dfb5.js.map"
+    "main.css": "/mooc-web/static/css/main.49cddc3d.css",
+    "main.js": "/mooc-web/static/js/main.03c39c98.js",
+    "index.html": "/mooc-web/index.html",
+    "main.49cddc3d.css.map": "/mooc-web/static/css/main.49cddc3d.css.map",
+    "main.03c39c98.js.map": "/mooc-web/static/js/main.03c39c98.js.map"
   },
   "entrypoints": [
     "static/css/main.49cddc3d.css",
-    "static/js/main.f0a5dfb5.js"
+    "static/js/main.03c39c98.js"
   ]
 }
