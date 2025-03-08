@@ -1,17 +1,17 @@
 import React from "react";
 import {
+  Alert,
+  Button,
   Dialog,
-  DialogTitle,
   DialogActions,
   DialogContent,
-  Button,
 } from "@mui/material";
 
-const WinDialog = (props) => {
-  const { onClose, data, open, title } = props;
+const AlterDialog = (props) => {
+  const { onClose, data, open, title, alertType } = props;
 
   const handleCancle = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: false,
       data: data,
     };
@@ -19,7 +19,7 @@ const WinDialog = (props) => {
   };
 
   const handleClose = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: false,
       data: data,
     };
@@ -27,7 +27,7 @@ const WinDialog = (props) => {
   };
 
   const handleOk = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: true,
       data: data,
     };
@@ -36,17 +36,26 @@ const WinDialog = (props) => {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle >{title}</DialogTitle>
+      <Alert severity={alertType ? alertType : "info"}>{title}</Alert>
+      {/* <DialogTitle>
+       
+      </DialogTitle> */}
       <DialogContent>{props.children}</DialogContent>
       <DialogActions>
-      <Button color="success" variant="contained" type="submit" onClick={handleOk}>
+        <Button
+          color="success"
+          variant="contained"
+          type="submit"
+          onClick={handleOk}
+        >
           Ok
         </Button>
-        <Button color="warning" variant="outlined" onClick={handleCancle}>Cancel</Button>
-     
+        <Button color="warning" variant="outlined" onClick={handleCancle}>
+          Cancel
+        </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default WinDialog;
+export default AlterDialog;

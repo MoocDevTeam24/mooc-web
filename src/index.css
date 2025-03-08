@@ -8,13 +8,11 @@ body,
   font-family: "Source Sans Pro", sans-serif;
 }
 
-
 .app {
   display: flex;
   position: relative;
 }
 
-
-div{
+div {
   display: block;
 }

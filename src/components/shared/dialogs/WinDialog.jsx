@@ -1,17 +1,17 @@
 import React from "react";
 import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
-  Button,
-  Alert
+  DialogTitle,
 } from "@mui/material";
 
-const AlterDialog = (props) => {
-  const { onClose, data, open, title, alertType } = props;
+const WinDialog = (props) => {
+  const { onClose, data, open, title } = props;
 
   const handleCancle = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: false,
       data: data,
     };
@@ -19,7 +19,7 @@ const AlterDialog = (props) => {
   };
 
   const handleClose = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: false,
       data: data,
     };
@@ -27,7 +27,7 @@ const AlterDialog = (props) => {
   };
 
   const handleOk = () => {
-    let paramdata = {
+    const paramdata = {
       isOk: true,
       data: data,
     };
@@ -36,10 +36,7 @@ const AlterDialog = (props) => {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-         <Alert severity={alertType ? alertType : "info"}>{title}</Alert>
-      {/* <DialogTitle>
-       
-      </DialogTitle> */}
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>{props.children}</DialogContent>
       <DialogActions>
         <Button
@@ -58,4 +55,4 @@ const AlterDialog = (props) => {
   );
 };
 
-export default AlterDialog;
+export default WinDialog;

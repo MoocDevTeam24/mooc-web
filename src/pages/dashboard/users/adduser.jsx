@@ -1,23 +1,21 @@
-import React, { useCallback } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  TextField,
-  Select,
-  InputLabel,
   FormControl,
+  InputLabel,
   MenuItem,
+  Select,
   Stack,
+  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
-import postRequest from "../../request/postRequest";
-import Header from "../../components/header";
 
-import { useDropzone } from "react-dropzone";
-import MoocDropzone from "../../components/moocDropzone";
-import { useState } from "react";
+import Header from "../../../components/dashboard/shared/Header";
+import MoocDropzone from "../../../components/dashboard/shared/MoocDropzone";
+import postRequest from "../../../request/postRequest";
 
 export default function AddUser() {
   const formik = useFormik({
@@ -47,7 +45,7 @@ export default function AddUser() {
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
     }),
     onSubmit: async (values) => {
-      let result = await postRequest("/users", {
+      const result = await postRequest("/users", {
         username: values.username,
         password: values.password,
         email: values.email,
@@ -60,7 +58,7 @@ export default function AddUser() {
       if (result.status == 1) {
         toast.success("add success!");
         formik.resetForm();
-        //navigate("/", { replace: true });
+        // navigate("/", { replace: true });
       } else {
         toast.error("add failed!");
       }
@@ -207,7 +205,7 @@ export default function AddUser() {
             sx={{ gridColumn: "span 4" }}
           />
 
-          <MoocDropzone  avatarResult={handleAvatarResult} />
+          <MoocDropzone avatarResult={handleAvatarResult} />
         </Box>
         <Box display="flex" justifyContent="end" mt="20px">
           <Stack direction="row" spacing={2}>

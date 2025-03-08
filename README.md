@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## .env.development file
+
+```
+REACT_APP_BASE_API_URL=http://localhost:9000/api
+
+ESLINT_NO_DEV_ERRORS=true
+
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

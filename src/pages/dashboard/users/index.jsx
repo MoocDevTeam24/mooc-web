@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Box, Button, Stack,Avatar } from "@mui/material";
-import Header from "../../components/header";
-import colors from "../../theme";
-import AlterDialog from "../../components/alterDialog";
-import UserList from "./userlist";
-import { useEffect } from "react";
-import getRequest from "../../request/getRequest";
-import deleteRequest from "../../request/delRequest";
-
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Avatar, Box, Button, Stack } from "@mui/material";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
+import Header from "../../../components/dashboard/shared/Header";
+import AlterDialog from "../../../components/shared/dialogs/AlterDialog";
+import deleteRequest from "../../../request/delRequest";
+import getRequest from "../../../request/getRequest";
+import colors from "../../../theme";
+
+import UserList from "./userlist";
 
 export default function User() {
   const [pageSearch, setpageSearch] = useState({
@@ -25,10 +25,8 @@ export default function User() {
     }));
   };
 
-  const handleUpdate=(row)=>{
-   
-  }
-  
+  const handleUpdate = (row) => {};
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -62,31 +60,30 @@ export default function User() {
       headerName: "Avatar",
       flex: 1,
       renderCell: (row) => {
-       
-        return (
-          <Avatar src={row.row.avatar} sx={{ width: 50, height: 50 }}></Avatar>
-        );
+        return <Avatar src={row.row.avatar} sx={{ width: 50, height: 50 }} />;
       },
     },
     {
-        field: "operation",
-        headerName: "opertation",
-        flex: 1,
-        renderCell: (row) => {
-          return (
-            <Box>
-             <Button variant="text" onClick={handleUpdate(row)} >Update</Button>
-            </Box>
-          );
-        },
-      }
+      field: "operation",
+      headerName: "opertation",
+      flex: 1,
+      renderCell: (row) => {
+        return (
+          <Box>
+            <Button variant="text" onClick={handleUpdate(row)}>
+              Update
+            </Button>
+          </Box>
+        );
+      },
+    },
   ];
 
   const [pageData, setPageData] = useState({ items: [], total: 0 });
 
   useEffect(() => {
-    let getUser = async () => {
-      let result = await getRequest(
+    const getUser = async () => {
+      const result = await getRequest(
         `/users/${pageSearch.page}/${pageSearch.pageSize}`
       );
       if (result.status == 1) {
@@ -100,7 +97,7 @@ export default function User() {
   }, [pageSearch]);
 
   const [open, setOpen] = useState(false);
- 
+
   const navigate = useNavigate();
   function handleAddUser() {
     navigate("/users/adduser");
@@ -123,9 +120,9 @@ export default function User() {
     if (!data.isOk || rowSelectionModel.length == 0) {
       return;
     }
-  
-    let ids = rowSelectionModel.join(",");
-    let result = await deleteRequest(`/users/${ids}`);
+
+    const ids = rowSelectionModel.join(",");
+    const result = await deleteRequest(`/users/${ids}`);
     if (result.status == 1) {
       toast.success("delete success!");
     } else {
@@ -134,10 +131,8 @@ export default function User() {
 
     setpageSearch({ page: 1, pageSize: pageSearch.pageSize });
   };
-
-  
   const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
-  
+
   return (
     <>
       <Box m="20px">
@@ -160,7 +155,7 @@ export default function User() {
               borderBottom: "none",
             },
             "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: colors.primary[400],
+              backgroundColor: colors.primary[900],
             },
             "& .MuiDataGrid-footerContainer": {
               borderTop: "none",
@@ -190,7 +185,7 @@ export default function User() {
             pageData={pageData}
             setPaginationModel={handlePaginationModel}
             setRowSelectionModel={setRowSelectionModel}
-          ></UserList>
+          />
         </Box>
       </Box>
       <AlterDialog

@@ -1,13 +1,13 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/dashboard";
-import Login from "./pages/login/login";
-import Mainlayout from "./components/mainlayout/index";
 import { Toaster } from "react-hot-toast";
-import NeedAuth from "./components/needAuth";
-import User from "./pages/users/index";
-import AddUser from "./pages/users/adduser";
+import { Route, Routes } from "react-router-dom";
 
+import NeedAuth from "./components/auth/NeedAuth";
+import Mainlayout from "./components/dashboard/MainLayout";
+import Login from "./pages/auth/login";
+import Dashboard from "./pages/dashboard";
+import AddUser from "./pages/dashboard/users/adduser";
+import User from "./pages/dashboard/users/index";
 import { theme } from "./theme";
 
 function App() {

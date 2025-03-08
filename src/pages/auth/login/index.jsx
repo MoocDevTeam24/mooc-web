@@ -1,20 +1,21 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import postRequest from "../../request/postRequest";
+import * as React from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../store/reducer/authSlice"
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+
+import postRequest from "../../../request/postRequest";
+import { login } from "../../../store/reducer/authSlice";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function Login() {
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      let result = await postRequest("/auth/login", {
+      const result = await postRequest("/auth/login", {
         username: values.username,
         password: values.password,
       });
@@ -44,13 +45,13 @@ export default function Login() {
       if (result.status == 1) {
         // localStorage.setItem("access_token", result.data.token);
         // localStorage.setItem("loginInfo", JSON.stringify(result.data));
-         //调用 authSlice  login 方法
-         dispatch(login(
-          {
+        // 调用 authSlice  login 方法
+        dispatch(
+          login({
             accesstoken: result.data.token,
-            user: result.data
-          }
-        ));
+            user: result.data,
+          })
+        );
         navigate("/", { replace: true });
       } else {
         toast.error("username or password incorrect!");
