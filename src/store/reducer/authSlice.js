@@ -5,8 +5,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState: () => {
     // 初始化 状态
-    const accesstoken = localStorage.getItem("loginInfo");
-    if (!accesstoken) {
+    const loginInfo = localStorage.getItem("loginInfo");
+    if (!loginInfo) {
       return {
         IsAuth: false,
         user: null,
@@ -26,7 +26,7 @@ const authSlice = createSlice({
       // 本地存储 redux的东西存储到内存中 应为刷新页面登录就没了 需要本地存储 保存登录状态
       localStorage.setItem("loginInfo", JSON.stringify(state.user));
     },
-    logout(state, action) {
+    logout(state) {
       state.IsAuth = false;
       state.user = null;
 
