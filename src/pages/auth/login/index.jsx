@@ -15,12 +15,13 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import postRequest from "../../../request/postRequest";
+import getRequest from "../../../request/getRequest";
 import { login } from "../../../store/reducer/authSlice";
 
 export default function Login() {
   const navigate = useNavigate();
-  // 获取 dispatch
   const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -42,19 +43,19 @@ export default function Login() {
         password: values.password,
       });
 
-      if (result.status == 1) {
-        // localStorage.setItem("access_token", result.data.token);
-        // localStorage.setItem("loginInfo", JSON.stringify(result.data));
-        // 调用 authSlice  login 方法
-        dispatch(
-          login({
-            accesstoken: result.data.token,
-            user: result.data,
-          })
-        );
-        navigate("/", { replace: true });
+      if (result.status === 1) {
+        const meResult = await getRequest("/auth/me");
+        if (meResult.status === 1) {
+          dispatch(
+            login({
+              user: result.data,
+            })
+          );
+
+          navigate("/", { replace: true });
+        }
       } else {
-        toast.error("username or password incorrect!");
+        toast.error(result.message || "Username or password incorrect!");
       }
     },
   });
@@ -86,7 +87,6 @@ export default function Login() {
               autoComplete="text"
               onChange={formik.handleChange}
               value={formik.values.username}
-              // If this field has been touched, and it contains an error
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
               autoFocus
@@ -104,10 +104,7 @@ export default function Login() {
               helperText={formik.touched.password && formik.errors.password}
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
+
             <Button
               type="submit"
               fullWidth

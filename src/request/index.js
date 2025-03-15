@@ -6,39 +6,42 @@ const instance = axios.create({
   timeout: 100000,
   responseType: "json",
   responseEncoding: "utf8",
+  withCredentials: true,
 });
 
-//Add a request interceptor
+const getCsrfTokenFromCookie = () => {
+  const match = document.cookie.match(new RegExp("(^| )XSRF-TOKEN=([^;]+)"));
+  return match ? match[2] : "";
+};
+
 instance.interceptors.request.use(
-  function (config) {
-    //Get access token for headers
-    const accesstoken = localStorage.getItem("access_token");
-    if (accesstoken) {
-      config.headers.Authorization = `Bearer ${accesstoken}`;
+  (config) => {
+    const csrfToken = getCsrfTokenFromCookie();
+    if (csrfToken) {
+      config.headers["x-xsrf-token"] = csrfToken;
     }
+
     return config;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
-//Add a response interceptor
 instance.interceptors.response.use(
-  function (response) {
+  (response) => {
     if (response.status === 200) {
       return response.data;
-    } else {
     }
-
     return response;
   },
-  function (error) {
+  (error) => {
     if (error.response) {
       if (error.response.status === 401) {
         toast.error("Unauthenticated!");
-        localStorage.removeItem("access_token");
+
         window.location.href = "/login";
+
         return { status: 401, data: {}, message: "Unauthenticated" };
       } else {
         if (
@@ -46,19 +49,26 @@ instance.interceptors.response.use(
           error.response.data.status &&
           error.response.data.message
         ) {
-          if (error.response.data.message instanceof Array) {
-            toast.error(error.response.data.message[0].msg);
-          } else if (typeof error.response.data.message === "string") {
-            toast.error(error.response.data.message);
+          const message = error.response.data.message;
+
+          if (Array.isArray(message)) {
+            toast.error(message[0]?.msg || "Request error!");
+          } else if (typeof message === "string") {
+            toast.error(message);
           } else {
-            toast.error("request error!");
+            toast.error("Request error!");
           }
-          return { status: 400, data: {}, message: "request error!" };
+
+          return { status: 400, data: {}, message: "Request error!" };
         }
-        toast.error("request error!");
-        return { status: 500, data: {}, message: "request error!" };
+
+        toast.error("Request error!");
+        return { status: 500, data: {}, message: "Request error!" };
       }
     }
+
+    toast.error("Unexpected error!");
+    return { status: 500, data: {}, message: "Unexpected error!" };
   }
 );
 

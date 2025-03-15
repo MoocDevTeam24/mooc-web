@@ -17,7 +17,14 @@ function App() {
       <Toaster />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Mainlayout />}>
+        <Route
+          path="/"
+          element={
+            <NeedAuth>
+              <Mainlayout />
+            </NeedAuth>
+          }
+        >
           <Route
             path="/dashboard"
             element={
